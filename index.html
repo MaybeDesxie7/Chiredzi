@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chiredzi Government High School — Excellence & Character</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Chiredzi Government High School — premium private school: academics, student life, admissions, news, gallery & contact.">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <!-- Logo doubled in size via CSS -->
+        <img src="images/logo.png" alt="Chiredzi Government High logo" class="brand-logo" />
+        <div class="brand-text">
+          <span class="school-name">Chiredzi Government High School</span>
+          <span class="school-tag">Excellence &amp; Character</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <ul id="nav-list" class="nav-list">
+          <li><a class="nav-link" href="#home">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#academics">Academics</a></li>
+          <li><a class="nav-link" href="#student-life">Student Life</a></li>
+          <li><a class="nav-link" href="#admissions">Admissions</a></li>
+          <li><a class="nav-link" href="#news">News &amp; Events</a></li>
+          <li><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HERO: multiple slides stacked, fade dissolve -->
+    <section id="home" class="hero" aria-label="Hero slideshow">
+      <div class="hero-slides" aria-hidden="true">
+        <div class="hero-slide active" style="background-image:url('images/image1.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('images/image2.jpeg');"></div>
+        <div class="hero-slide" style="background-image:url('images/image3.jpeg');"></div>
+        <div class="hero-slide" style="background-image:url('images/science.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('images/leadership.jpeg');"></div>
+      </div>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-content fade-in">
+          <h1 class="hero-title">Inspiring Young Minds. Building Future Leaders.</h1>
+          <p class="hero-sub">Chiredzi Government High School combines academic rigor with character development — scholarship, sport &amp; the arts.</p>
+
+          <div class="hero-cta">
+            <a href="#admissions" class="btn btn-gold">Join Our School</a>
+            <a href="#about" class="btn btn-outline-gold">Learn More</a>
+          </div>
+        </div>
+
+        <aside class="hero-info fade-in" aria-hidden="true">
+          <div class="highlight"><strong>Small Class Sizes</strong><span>Individual attention</span></div>
+          <div class="highlight"><strong>Academic Excellence</strong><span>Strong pass rate</span></div>
+          <div class="highlight"><strong>All-round Development</strong><span>Sports &amp; Arts</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about section--pad">
+      <div class="container grid-2">
+        <div class="card fade-in">
+          <h2>About Chiredzi Government High School</h2>
+          <p>We are a forward-looking institution committed to academic excellence, ethical leadership and whole-person education. Our programs blend rigorous academics with co-curricular opportunities so learners thrive in and out of the classroom.</p>
+          <p><strong>Our mission:</strong> To cultivate confident, compassionate and capable leaders through excellent teaching and strong values.</p>
+          <a class="btn btn-outline-gold" href="about.html">Read Our Story</a>
+        </div>
+
+        <figure class="about-figure fade-in">
+          <img src="images/leadership.jpeg" alt="School campus">
+          <figcaption>Our campus — modern learning spaces and a warm community</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ACADEMICS (unique card styles) -->
+    <section id="academics" class="section academics-section">
+      <div class="container">
+        <h2 class="center fade-in">Academics</h2>
+        <p class="lead center fade-in">A rigorous and caring academic program — from STEM to humanities — preparing students for higher education and life.</p>
+
+        <div class="academic-grid">
+          <article class="academic-card card-style-tilt fade-up" style="--delay:0s;">
+            <div class="academic-image" style="background-image:url('images/science.jpg')"></div>
+            <div class="academic-content">
+              <h3>Science &amp; Technology</h3>
+              <p>Laboratory-based learning, robotics and inquiry-driven STEM projects.</p>
+            </div>
+          </article>
+
+          <article class="academic-card card-style-frame fade-up" style="--delay:0.08s;">
+            <div class="academic-image" style="background-image:url('images/maths.jpg')"></div>
+            <div class="academic-content">
+              <h3>Mathematics</h3>
+              <p>Strong numeracy foundation, problem solving and competition teams.</p>
+            </div>
+          </article>
+
+          <article class="academic-card card-style-glow fade-up" style="--delay:0.16s;">
+            <div class="academic-image" style="background-image:url('images/language.jpg')"></div>
+            <div class="academic-content">
+              <h3>Humanities &amp; Languages</h3>
+              <p>Critical thinking, global perspectives and strong communication skills.</p>
+            </div>
+          </article>
+
+          <article class="academic-card card-style-minimal fade-up" style="--delay:0.24s;">
+            <div class="academic-image" style="background-image:url('images/ict.jpg')"></div>
+            <div class="academic-content">
+              <h3>ICT &amp; Media</h3>
+              <p>Digital literacy, media projects and creative technologies.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT LIFE: Videos (play on click) -->
+    <section id="student-life" class="section section--pad">
+      <div class="container">
+        <h2 class="center fade-in">Student Life</h2>
+        <p class="lead center fade-in">Experience life beyond the classroom: sports, arts and leadership in action.</p>
+
+        <div class="life-grid">
+          <article class="life-card fade-up" style="--delay:0.05s;">
+            <div class="life-media" data-video="videos/sports.mp4" role="button" aria-label="Play sports video" tabindex="0">
+              <img src="images/sports.jpg" alt="Sports poster" />
+              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="life-body">
+              <h3>Sports &amp; Wellness</h3>
+              <p>Inter-house competitions, coaching and wellness programs.</p>
+            </div>
+          </article>
+
+          <article class="life-card fade-up" style="--delay:0.12s;">
+            <div class="life-media" data-video="videos/arts.mp4" role="button" aria-label="Play arts video" tabindex="0">
+              <img src="images/arts.jpeg" alt="Arts poster" />
+              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="life-body">
+              <h3>Arts &amp; Drama</h3>
+              <p>Choir, theater productions and annual exhibitions.</p>
+            </div>
+          </article>
+
+          <article class="life-card fade-up" style="--delay:0.2s;">
+            <div class="life-media" data-video="videos/leadership.mp4" role="button" aria-label="Play leadership video" tabindex="0">
+              <img src="images/leadership.jpeg" alt="Leadership poster" />
+              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="life-body">
+              <h3>Leadership &amp; Service</h3>
+              <p>Student council, service learning and mentorship programs.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMISSIONS -->
+    <section id="admissions" class="section section--alt section--pad">
+      <div class="container grid-2">
+        <div class="card admissions-card fade-in">
+          <h2>Admissions</h2>
+          <p>Join Chiredzi Government High — we welcome applications from motivated learners. Scholarships & bursaries available for qualifying candidates.</p>
+          <ul class="admit-list">
+            <li>Open Day &amp; Tours — every term</li>
+            <li>How to apply: Download the form or apply online</li>
+            <li>Transparent tuition &amp; fee structure</li>
+          </ul>
+          <a href="admissions.html" class="btn btn-gold">Apply &amp; Request Info</a>
+        </div>
+
+        <figure class="map-card fade-in" aria-hidden="true">
+          <img src="images/Map.jpg" alt="Map placeholder">
+          <figcaption>123 Education Road, Chiredzi — View on map</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news" class="section section--pad">
+      <div class="container">
+        <h2 class="center fade-in">News &amp; Events</h2>
+        <div class="news-carousel">
+          <article class="news-item fade-up" style="--delay:0s;">
+            <img src="images/sports.jpg" alt="Sports day">
+            <div class="news-item-body">
+              <time datetime="2025-03-20">Mar 20, 2025</time>
+              <h3>Sports Day Recap</h3>
+              <p>Highlights and winners from our annual athletics festival.</p>
+            </div>
+          </article>
+
+          <article class="news-item fade-up" style="--delay:0.08s;">
+            <img src="images/science.jpg" alt="Science fair">
+            <div class="news-item-body">
+              <time datetime="2025-02-10">Feb 10, 2025</time>
+              <h3>Science Fair Triumphs</h3>
+              <p>Students brought home regional awards for innovation.</p>
+            </div>
+          </article>
+
+          <article class="news-item fade-up" style="--delay:0.16s;">
+            <img src="images/maths.jpg" alt="Graduation">
+            <div class="news-item-body">
+              <time datetime="2025-01-15">Jan 15, 2025</time>
+              <h3>Graduation Ceremony</h3>
+              <p>Celebrating the achievements of Class of 2025.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="news-controls fade-in">
+          <a href="news.html" class="btn btn-outline-gold">All News &amp; Events</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section section--alt section--pad">
+      <div class="container">
+        <h2 class="center fade-in">Gallery</h2>
+        <p class="lead center fade-in">Moments from campus life — click any image to enlarge.</p>
+
+        <div class="gallery-grid fade-in">
+          <img class="gallery-thumb" src="images/image1.jpg" alt="Students in class" data-full="images/gallery1.jpg">
+          <img class="gallery-thumb" src="images/image2.jpg" alt="Campus exterior" data-full="images/gallery2.jpg">
+          <img class="gallery-thumb" src="images/image3.jpg" alt="Sports action" data-full="images/gallery3.jpg">
+          <img class="gallery-thumb" src="images/arts.jpeg" alt="Art exhibition" data-full="images/gallery4.jpg">
+          <img class="gallery-thumb" src="images/maths.jpg" alt="Assembly" data-full="images/gallery5.jpg">
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section section--pad">
+      <div class="container grid-3">
+        <div class="contact-card fade-in">
+          <h3>Contact Us</h3>
+          <p><strong>Address:</strong> 123 Education Road, Chiredzi, Zimbabwe</p>
+          <p><strong>Phone:</strong> <a class="inline-link" href="tel:+263771234567">+263 77 123 4567</a></p>
+          <p><strong>Email:</strong> <a class="inline-link" href="mailto:info@chiredzihigh.ac.zw">info@chiredzihigh.ac.zw</a></p>
+        </div>
+
+        <div class="contact-card fade-in">
+          <h3>Office Hours</h3>
+          <p>Mon — Fri: 08:00 — 16:30</p>
+          <p>Sat: 09:00 — 12:00 (by appointment)</p>
+        </div>
+
+        <div class="contact-card fade-in">
+          <h3>Visit Us</h3>
+          <p>Plan a visit, book a campus tour, or join our Open Day.</p>
+          <a class="btn btn-outline-gold" href="contact.html">Get Directions</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>Chiredzi Government High School</strong>
+        <small>© 2025 • All Rights Reserved</small>
+        <address class="footer-address">123 Education Road, Chiredzi, Zimbabwe</address>
+      </div>
+
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a class="footer-link" href="#about">About</a></li>
+            <li><a class="footer-link" href="#academics">Academics</a></li>
+            <li><a class="footer-link" href="#admissions">Admissions</a></li>
+            <li><a class="footer-link" href="#news">News</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>Phone: <a class="footer-link" href="tel:+263771234567">+263 77 123 4567</a></p>
+          <p>Email: <a class="footer-link" href="mailto:info@chiredzihigh.ac.zw">info@chiredzihigh.ac.zw</a></p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <div class="socials">
+            <a class="footer-link" href="#">Facebook</a>
+            <a class="footer-link" href="#">Twitter</a>
+            <a class="footer-link" href="#">Instagram</a>
+            <a class="footer-link" href="#">YouTube</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Close">✕</button>
+    <img id="lightbox-img" src="" alt="Expanded gallery image">
+  </div>
+
+  <!-- FLOATING CONTACT ICONS (site-wide) -->
+  <div class="floating-icons" aria-hidden="false">
+    <a class="fi wa" href="https://wa.me/263771234567" target="_blank" rel="noopener" title="WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.9 11.9 0 0012 0C5.372 0 .036 4.836.036 10.8c0 1.9.5 3.676 1.45 5.248L0 24l7.224-1.9A11.9 11.9 0 0012 21.6c6.628 0 11.964-4.836 11.964-10.8 0-1.84-.466-3.572-1.464-5.3z"/></svg>
+    </a>
+
+    <a class="fi phone" href="tel:+263771234567" title="Call us">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.2c1.2.5 2.6.8 4 .8a1 1 0 011 1V21a1 1 0 01-1 1C10 22 2 14 2 4a1 1 0 011-1h3.4a1 1 0 011 1c0 1.4.3 2.8.8 4a1 1 0 01-.2 1l-2.4 2.8z"/></svg>
+    </a>
+
+    <a class="fi mail" href="mailto:info@chiredzihigh.ac.zw" title="Email us">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
