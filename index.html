@@ -8,16 +8,22 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- Local stylesheet -->
   <link rel="stylesheet" href="style.css" />
+
   <meta name="description" content="Chiredzi Government High School — premium private school: academics, student life, admissions, news, gallery & contact.">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header" id="site-header">
-    <div class="container header-inner">
-      <div class="brand">
-        <!-- Logo doubled in size via CSS -->
+  <!-- ============================================================
+       SITE HEADER
+       - fixed
+       - slides down on scroll (handled by script.js)
+       - accessible mobile menu
+       ============================================================ -->
+  <header id="site-header" class="site-header" role="banner" aria-label="Main header">
+    <div class="header-inner container">
+      <div class="brand" role="img" aria-label="Chiredzi Government High School logo and name">
         <img src="images/logo.png" alt="Chiredzi Government High logo" class="brand-logo" />
         <div class="brand-text">
           <span class="school-name">Chiredzi Government High School</span>
@@ -26,30 +32,33 @@
       </div>
 
       <nav class="nav" aria-label="Main navigation">
-        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle main navigation">
+          <span class="bar" aria-hidden="true"></span>
+          <span class="bar" aria-hidden="true"></span>
+          <span class="bar" aria-hidden="true"></span>
         </button>
 
-        <ul id="nav-list" class="nav-list">
-          <li><a class="nav-link" href="#home">Home</a></li>
-          <li><a class="nav-link" href="#about">About</a></li>
-          <li><a class="nav-link" href="#academics">Academics</a></li>
-          <li><a class="nav-link" href="#student-life">Student Life</a></li>
-          <li><a class="nav-link" href="#admissions">Admissions</a></li>
-          <li><a class="nav-link" href="#news">News &amp; Events</a></li>
-          <li><a class="nav-link" href="#gallery">Gallery</a></li>
-          <li><a class="nav-link" href="#contact">Contact</a></li>
+        <ul id="nav-list" class="nav-list" role="menubar" aria-hidden="true">
+          <li role="none"><a role="menuitem" class="nav-link" href="#home">Home</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#about">About</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#academics">Academics</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#student-life">Student Life</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#admissions">Admissions</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#news">News &amp; Events</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#gallery">Gallery</a></li>
+          <li role="none"><a role="menuitem" class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main>
-
-    <!-- HERO: multiple slides stacked, fade dissolve -->
+  <!-- ============================================================
+       MAIN
+       - hero accounts for header height so it does not get covered
+       - hero slideshow uses background images
+       ============================================================ -->
+  <main id="main" role="main">
+    <!-- HERO -->
     <section id="home" class="hero" aria-label="Hero slideshow">
       <div class="hero-slides" aria-hidden="true">
         <div class="hero-slide active" style="background-image:url('images/image1.jpg');"></div>
@@ -81,7 +90,7 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="section about section--pad">
+    <section id="about" class="section about section--pad" aria-label="About this school">
       <div class="container grid-2">
         <div class="card fade-in">
           <h2>About Chiredzi Government High School</h2>
@@ -91,14 +100,14 @@
         </div>
 
         <figure class="about-figure fade-in">
-          <img src="images/leadership.jpeg" alt="School campus">
+          <img src="images/leadership.jpeg" alt="School campus" />
           <figcaption>Our campus — modern learning spaces and a warm community</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- ACADEMICS (unique card styles) -->
-    <section id="academics" class="section academics-section">
+    <!-- ACADEMICS -->
+    <section id="academics" class="section academics-section" aria-label="Academics">
       <div class="container">
         <h2 class="center fade-in">Academics</h2>
         <p class="lead center fade-in">A rigorous and caring academic program — from STEM to humanities — preparing students for higher education and life.</p>
@@ -139,8 +148,8 @@
       </div>
     </section>
 
-    <!-- STUDENT LIFE: Videos (play on click) -->
-    <section id="student-life" class="section section--pad">
+    <!-- STUDENT LIFE -->
+    <section id="student-life" class="section section--pad" aria-label="Student life">
       <div class="container">
         <h2 class="center fade-in">Student Life</h2>
         <p class="lead center fade-in">Experience life beyond the classroom: sports, arts and leadership in action.</p>
@@ -148,8 +157,13 @@
         <div class="life-grid">
           <article class="life-card fade-up" style="--delay:0.05s;">
             <div class="life-media" data-video="videos/sports.mp4" role="button" aria-label="Play sports video" tabindex="0">
+              <!-- poster image is optional fallback -->
               <img src="images/sports.jpg" alt="Sports poster" />
-              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+              <div class="play-overlay" aria-hidden="true">
+                <div class="play-btn" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
             </div>
             <div class="life-body">
               <h3>Sports &amp; Wellness</h3>
@@ -160,7 +174,11 @@
           <article class="life-card fade-up" style="--delay:0.12s;">
             <div class="life-media" data-video="videos/arts.mp4" role="button" aria-label="Play arts video" tabindex="0">
               <img src="images/arts.jpeg" alt="Arts poster" />
-              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+              <div class="play-overlay" aria-hidden="true">
+                <div class="play-btn" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
             </div>
             <div class="life-body">
               <h3>Arts &amp; Drama</h3>
@@ -171,7 +189,11 @@
           <article class="life-card fade-up" style="--delay:0.2s;">
             <div class="life-media" data-video="videos/leadership.mp4" role="button" aria-label="Play leadership video" tabindex="0">
               <img src="images/leadership.jpeg" alt="Leadership poster" />
-              <div class="play-overlay play-outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div>
+              <div class="play-overlay" aria-hidden="true">
+                <div class="play-btn" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
             </div>
             <div class="life-body">
               <h3>Leadership &amp; Service</h3>
@@ -183,7 +205,7 @@
     </section>
 
     <!-- ADMISSIONS -->
-    <section id="admissions" class="section section--alt section--pad">
+    <section id="admissions" class="section section--alt section--pad" aria-label="Admissions">
       <div class="container grid-2">
         <div class="card admissions-card fade-in">
           <h2>Admissions</h2>
@@ -197,19 +219,19 @@
         </div>
 
         <figure class="map-card fade-in" aria-hidden="true">
-          <img src="images/Map.jpg" alt="Map placeholder">
+          <img src="images/Map.jpg" alt="Map placeholder" />
           <figcaption>123 Education Road, Chiredzi — View on map</figcaption>
         </figure>
       </div>
     </section>
 
     <!-- NEWS -->
-    <section id="news" class="section section--pad">
+    <section id="news" class="section section--pad" aria-label="News and events">
       <div class="container">
         <h2 class="center fade-in">News &amp; Events</h2>
         <div class="news-carousel">
           <article class="news-item fade-up" style="--delay:0s;">
-            <img src="images/sports.jpg" alt="Sports day">
+            <img src="images/sports.jpg" alt="Sports day" />
             <div class="news-item-body">
               <time datetime="2025-03-20">Mar 20, 2025</time>
               <h3>Sports Day Recap</h3>
@@ -218,7 +240,7 @@
           </article>
 
           <article class="news-item fade-up" style="--delay:0.08s;">
-            <img src="images/science.jpg" alt="Science fair">
+            <img src="images/science.jpg" alt="Science fair" />
             <div class="news-item-body">
               <time datetime="2025-02-10">Feb 10, 2025</time>
               <h3>Science Fair Triumphs</h3>
@@ -227,7 +249,7 @@
           </article>
 
           <article class="news-item fade-up" style="--delay:0.16s;">
-            <img src="images/maths.jpg" alt="Graduation">
+            <img src="images/maths.jpg" alt="Graduation" />
             <div class="news-item-body">
               <time datetime="2025-01-15">Jan 15, 2025</time>
               <h3>Graduation Ceremony</h3>
@@ -243,7 +265,7 @@
     </section>
 
     <!-- GALLERY -->
-    <section id="gallery" class="section section--alt section--pad">
+    <section id="gallery" class="section section--alt section--pad" aria-label="Gallery">
       <div class="container">
         <h2 class="center fade-in">Gallery</h2>
         <p class="lead center fade-in">Moments from campus life — click any image to enlarge.</p>
@@ -259,7 +281,7 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section section--pad">
+    <section id="contact" class="section section--pad" aria-label="Contact us">
       <div class="container grid-3">
         <div class="contact-card fade-in">
           <h3>Contact Us</h3>
@@ -284,8 +306,8 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
       <div class="footer-brand">
         <strong>Chiredzi Government High School</strong>
         <small>© 2025 • All Rights Reserved</small>
@@ -319,6 +341,10 @@
           </div>
         </div>
       </div>
+
+      <div class="footer-bottom">
+        <p>Designed and maintained by Chiredzi Government High School • Built with care.</p>
+      </div>
     </div>
   </footer>
 
@@ -328,7 +354,7 @@
     <img id="lightbox-img" src="" alt="Expanded gallery image">
   </div>
 
-  <!-- FLOATING CONTACT ICONS (site-wide) -->
+  <!-- FLOATING CONTACT ICONS -->
   <div class="floating-icons" aria-hidden="false">
     <a class="fi wa" href="https://wa.me/263771234567" target="_blank" rel="noopener" title="WhatsApp">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.9 11.9 0 0012 0C5.372 0 .036 4.836.036 10.8c0 1.9.5 3.676 1.45 5.248L0 24l7.224-1.9A11.9 11.9 0 0012 21.6c6.628 0 11.964-4.836 11.964-10.8 0-1.84-.466-3.572-1.464-5.3z"/></svg>
@@ -343,6 +369,7 @@
     </a>
   </div>
 
+  <!-- Local script -->
   <script src="script.js"></script>
 </body>
 </html>
