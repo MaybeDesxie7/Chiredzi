@@ -315,9 +315,83 @@ a:focus { outline: 3px solid rgba(91,184,231,0.25); outline-offset: 3px; }
 .timetable-table{width:100%;border-collapse:collapse}
 .timetable-table th,.timetable-table td{padding:9px;border-top:1px solid #eee;text-align:left;color:var(--muted)}
 
-/* sports */
-.sports-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
-.sport img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+/* sports section */
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.sport {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sport img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.sport h4 {
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.sport p.muted {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* hover effects */
+.sport:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.sport:hover img {
+  transform: scale(1.05);
+}
+
+/* responsive typography */
+@media (max-width: 768px) {
+  .sports-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .sport img {
+    height: 140px;
+  }
+
+  .sport h4 {
+    font-size: 1.1rem;
+  }
+
+  .sport p.muted {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sports-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sport img {
+    height: 180px;
+  }
+}
 
 /* gallery */
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
