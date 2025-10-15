@@ -1,339 +1,231 @@
 /* =========================================================
-   script.js — Interaction and accessibility behaviors
-   - nav toggle
-   - slide-down header
-   - hero slideshow
-   - intersection observer reveals
-   - video click-to-play with keyboard access
-   - gallery lightbox
-   ========================================================= */
+   script.js — interactions & animations for
+   Chiredzi Government High School
+   =========================================================
+   Features:
+   - Mobile nav toggle (vertical)
+   - Hamburger animation
+   - Smooth scrolling
+   - Gallery lightbox
+   - Contact & application forms
+   - Floating CTA
+   - Scroll reveal animations
+   - Basic a11y helpers
+========================================================= */
 
-/* ----------------------------------------------------------------
-   Helper utilities
-   ---------------------------------------------------------------- */
-function qs(sel, ctx = document) { return ctx.querySelector(sel); }
-function qsa(sel, ctx = document) { return Array.from(ctx.querySelectorAll(sel)); }
-function on(el, evt, fn, opts) { if (!el) return; el.addEventListener(evt, fn, opts); }
+(function () {
+  'use strict';
 
-/* ----------------------------------------------------------------
-   DOM references
-   ---------------------------------------------------------------- */
-const header = qs('#site-header');
-const navToggle = qs('#nav-toggle');
-const navList = qs('#nav-list');
-const heroSlides = qsa('.hero-slide');
-const galleryThumbs = qsa('.gallery-thumb');
-const lightbox = qs('#lightbox');
-const lbImg = qs('#lightbox-img');
-const lbClose = qs('.lb-close');
+  // Helpers
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => Array.from(document.querySelectorAll(selector));
+  const on = (el, event, fn) => el && el.addEventListener(event, fn);
 
-/* ----------------------------------------------------------------
-   NAV TOGGLE (mobile)
-   - shows/hides mobile nav and updates aria attributes
-   - allows closing by Escape
-   ---------------------------------------------------------------- */
-if (navToggle && navList) {
-  navToggle.addEventListener('click', () => {
-    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!isExpanded));
-    navList.classList.toggle('show');
-    navList.setAttribute('aria-hidden', String(isExpanded));
-    navToggle.classList.toggle('open');
+  /* =========================
+     Mobile Nav Toggle
+     ========================= */
+  const navToggle = $('.nav-toggle');
+  const hamburger = $('.hamburger');
+  const navList = $('.nav-list');
 
-    // move focus into nav for keyboard users when opening
-    if (!isExpanded) {
-      // focus first link
-      const first = navList.querySelector('a');
-      if (first) first.focus();
-    }
-  });
+  if (navToggle && hamburger && navList) {
+    on(navToggle, 'click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!expanded));
+      navList.classList.toggle('show', !expanded);
+      hamburger.classList.toggle('active', !expanded);
+    });
 
-  // Close nav on Escape
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && navList.classList.contains('show')) {
-      navList.classList.remove('show');
-      navToggle.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navList.setAttribute('aria-hidden', 'true');
-      navToggle.focus();
-    }
-  });
-
-  // Close mobile nav when a menu link is clicked (smooth scroll handled separately)
-  qsa('#nav-list a').forEach(a => {
-    a.addEventListener('click', () => {
-      if (navList.classList.contains('show')) {
+    // Close menu on link click (for smoother UX)
+    navList.querySelectorAll('a').forEach(link =>
+      link.addEventListener('click', () => {
         navList.classList.remove('show');
-        navToggle.classList.remove('open');
+        hamburger.classList.remove('active');
         navToggle.setAttribute('aria-expanded', 'false');
-        navList.setAttribute('aria-hidden', 'true');
+      })
+    );
+
+    // Reset on resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navList.classList.remove('show');
+        hamburger.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
       }
     });
-  });
-}
-
-/* ----------------------------------------------------------------
-   SLIDE-DOWN HEADER
-   - header starts off-screen (translateY(-100%))
-   - on initial page load, we show it if user has scrolled or after small delay
-   - on scroll we add/remove .scrolled for background change and toggle visibility
-   ---------------------------------------------------------------- */
-let lastScrollY = window.scrollY || 0;
-let headerVisible = false;
-const SHOW_AT = 60; // px
-
-function updateHeaderOnScroll() {
-  const currentY = window.scrollY || 0;
-
-  // Add scrolled class when we pass threshold
-  if (currentY > SHOW_AT) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
   }
 
-  // Reveal header when user scrolls down (and hide when at very top)
-  if (currentY > 10 && !headerVisible) {
-    header.classList.add('visible');
-    headerVisible = true;
-  } else if (currentY <= 10 && headerVisible) {
-    // hide when at top to give hero full-screen view
-    header.classList.remove('visible');
-    headerVisible = false;
-  }
-
-  lastScrollY = currentY;
-}
-
-on(window, 'scroll', updateHeaderOnScroll);
-on(window, 'load', () => {
-  // show header if user loaded the page already scrolled down
-  if ((window.scrollY || 0) > 10) {
-    header.classList.add('visible');
-    headerVisible = true;
-  } else {
-    // small timeout to slide-in header for first-time viewers
-    setTimeout(() => {
-      header.classList.add('visible');
-      headerVisible = true;
-    }, 550);
-  }
-  updateHeaderOnScroll();
-});
-
-/* ----------------------------------------------------------------
-   SMOOTH SCROLL FOR IN-PAGE LINKS
-   - intercept anchor clicks for same-page sections
-   ---------------------------------------------------------------- */
-qsa('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', function (ev) {
-    const href = this.getAttribute('href');
-    if (!href || href === '#' || href === '#!' ) return;
+  /* =========================
+     Smooth Scrolling
+     ========================= */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (href === '#') return;
     const target = document.querySelector(href);
-    if (!target) return;
-    ev.preventDefault();
-
-    // smooth scroll then update focus for accessibility
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    target.setAttribute('tabindex', '-1'); // allow focus if not normally focusable
-    setTimeout(() => {
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.setAttribute('tabindex', '-1');
       target.focus({ preventScroll: true });
-      target.removeAttribute('tabindex');
-    }, 700);
-  });
-});
-
-/* ----------------------------------------------------------------
-   HERO SLIDESHOW (fade dissolve)
-   - respects prefers-reduced-motion
-   ---------------------------------------------------------------- */
-(function heroSlideshow() {
-  if (!heroSlides || heroSlides.length === 0) return;
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (mediaQuery.matches) {
-    // keep first slide only
-    heroSlides.forEach((s, i) => { s.classList.toggle('active', i === 0); });
-    return;
-  }
-
-  let idx = 0;
-  const interval = 4800;
-
-  // ensure first visible
-  heroSlides.forEach(s => s.classList.remove('active'));
-  heroSlides[0].classList.add('active');
-
-  setInterval(() => {
-    heroSlides[idx].classList.remove('active');
-    idx = (idx + 1) % heroSlides.length;
-    heroSlides[idx].classList.add('active');
-  }, interval);
-})();
-
-/* ----------------------------------------------------------------
-   INTERSECTION OBSERVER: reveal animations for .fade-in and .fade-up
-   ---------------------------------------------------------------- */
-(function revealOnScroll() {
-  const ioOptions = { threshold: 0.12, rootMargin: '0px 0px -60px 0px' };
-  const io = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      if (el.classList.contains('fade-in')) el.classList.add('visible');
-      if (el.classList.contains('fade-up')) {
-        const delay = parseFloat(getComputedStyle(el).getPropertyValue('--delay')) || 0;
-        setTimeout(() => el.classList.add('in-view'), delay * 1000);
-      }
-      observer.unobserve(el);
-    });
-  }, ioOptions);
-
-  qsa('.fade-in').forEach(el => io.observe(el));
-  qsa('.fade-up').forEach(el => io.observe(el));
-})();
-
-/* ----------------------------------------------------------------
-   VIDEO PLAYBACK: click-to-create video element (for Student Life)
-   - posters are present as img tags
-   - keyboard accessible (Enter / Space)
-   - double-click rewinds
-   ---------------------------------------------------------------- */
-(function videosInteraction() {
-  const medias = qsa('.life-media');
-  medias.forEach(media => {
-    let videoEl = null;
-    let created = false;
-
-    function createVideo() {
-      if (created) return videoEl;
-      const src = media.dataset.video;
-      if (!src) return null;
-      videoEl = document.createElement('video');
-      videoEl.src = src;
-      videoEl.controls = true;
-      videoEl.playsInline = true;
-      videoEl.muted = false;
-      videoEl.style.width = '100%';
-      videoEl.style.height = '100%';
-      videoEl.style.objectFit = 'cover';
-      created = true;
-      return videoEl;
     }
-
-    function loadAndPlay() {
-      if (!created) createVideo();
-      if (!videoEl) return;
-      // remove children (poster image + overlay)
-      media.innerHTML = '';
-      media.appendChild(videoEl);
-      videoEl.currentTime = 0;
-      videoEl.play().catch(()=>{});
-      videoEl.focus();
-    }
-
-    // first click creates video and plays
-    media.addEventListener('click', (e) => {
-      const hasVideo = !!media.querySelector('video');
-      if (!hasVideo) loadAndPlay();
-      else {
-        if (videoEl.paused) videoEl.play().catch(()=>{});
-        else videoEl.pause();
-      }
-    });
-
-    // keyboard controls
-    media.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const hasVideo = !!media.querySelector('video');
-        if (!hasVideo) loadAndPlay();
-        else {
-          if (videoEl.paused) videoEl.play().catch(()=>{});
-          else videoEl.pause();
-        }
-      }
-      if (e.key === 'r' || e.key === 'R') {
-        if (videoEl) videoEl.currentTime = 0;
-      }
-    });
-
-    // double click rewinds and plays
-    media.addEventListener('dblclick', () => {
-      if (!created) createVideo();
-      if (!videoEl) return;
-      videoEl.currentTime = 0;
-      videoEl.play().catch(()=>{});
-    });
-
-    // ensure role/button has keyboard focus
-    media.setAttribute('tabindex', '0');
-    media.setAttribute('role', 'button');
   });
-})();
 
-/* ----------------------------------------------------------------
-   GALLERY LIGHTBOX - accessible
-   ---------------------------------------------------------------- */
-(function galleryLightbox() {
-  if (!lightbox || !lbImg) return;
+  /* =========================
+     Gallery Lightbox
+     ========================= */
+  const lightbox = $('#lightbox');
+  const lightboxImg = $('#lightbox-img');
+  const lightboxCaption = $('#lightbox-caption');
+  const thumbs = $$('.gallery-thumb');
 
-  galleryThumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      const full = thumb.dataset.full || thumb.src;
-      lbImg.src = full;
-      lightbox.classList.add('active');
+  thumbs.forEach((img) => {
+    img.addEventListener('click', () => {
+      const full = img.dataset.full || img.src;
+      lightboxImg.src = full;
+      lightboxImg.alt = img.alt || 'Gallery image';
+      lightboxCaption.textContent = img.alt || '';
+      lightbox.style.display = 'flex';
       lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      lbClose.focus();
-    });
-
-    // allow keyboard open (Enter)
-    thumb.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        thumb.click();
-      }
+      $('.lightbox-close').focus();
     });
   });
 
-  function closeLightbox() {
-    lightbox.classList.remove('active');
+  on($('.lightbox-close'), 'click', () => {
+    lightbox.style.display = 'none';
     lightbox.setAttribute('aria-hidden', 'true');
-    lbImg.src = '';
-    document.body.style.overflow = '';
-  }
+    lightboxImg.src = '';
+  });
 
-  if (lbClose) lbClose.addEventListener('click', closeLightbox);
-  if (lightbox) lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); });
-})();
-
-/* ----------------------------------------------------------------
-   Small helpers & diagnostics (runs on load)
-   - check that expected assets exist (non-blocking)
-   ---------------------------------------------------------------- */
-on(window, 'load', () => {
-  // sanity checks (non-blocking)
-  try {
-    // ensure header exists
-    if (!header) console.warn('Header element not found (expected #site-header).');
-    if (!navToggle) console.warn('Nav toggle not found (#nav-toggle).');
-    if (!navList) console.warn('Nav list not found (#nav-list).');
-  } catch (err) {
-    console.error('Startup checks failed', err);
-  }
-
-  // make sure header initially visible for users who load scrolled down
-  if ((window.scrollY || 0) > 10) {
-    header.classList.add('visible');
-  }
-
-  // mark images with no src
-  qsa('img').forEach(img => {
-    if (!img.getAttribute('src') || img.getAttribute('src').trim() === '') {
-      img.classList.add('missing-src');
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
     }
   });
-});
 
-/* End of script.js */
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  /* =========================
+     Contact & Application Forms
+     ========================= */
+  const contactForm = $('#contact-form');
+  const contactStatus = $('#contact-status');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      contactStatus.textContent = 'Sending...';
+      setTimeout(() => {
+        contactStatus.textContent = 'Message sent. We will reply within 2 working days.';
+        contactForm.reset();
+      }, 900);
+    });
+  }
+
+  const applyForm = $('#apply-form');
+  const appStatus = $('#app-status');
+  if (applyForm) {
+    applyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      appStatus.textContent = 'Submitting application...';
+      setTimeout(() => {
+        appStatus.textContent = 'Application submitted. Please print your reference number: REF-' + Date.now().toString().slice(-6);
+        applyForm.reset();
+      }, 1200);
+    });
+  }
+
+  /* =========================
+     Download Form Simulation
+     ========================= */
+  on($('#download-form'), 'click', () => {
+    const a = document.createElement('a');
+    a.href = 'data:application/pdf;base64,JVBERi0xLjQKJc...';
+    a.download = 'admission-form.pdf';
+    a.click();
+  });
+
+  /* =========================
+     Subscribe Form
+     ========================= */
+  const subscribeForm = $('#subscribe-form');
+  if (subscribeForm) {
+    subscribeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you! You are subscribed (demo).');
+      subscribeForm.reset();
+    });
+  }
+
+  /* =========================
+     Floating CTA subtle animation
+     ========================= */
+  const fabs = $$('.fab');
+  let floatPhase = 0;
+  setInterval(() => {
+    floatPhase = (floatPhase + 1) % 360;
+    const y = Math.sin(floatPhase * Math.PI / 180) * 3;
+    fabs.forEach(f => f.style.transform = `translateY(${y}px)`);
+  }, 2000);
+
+  /* =========================
+     Reveal Animations
+     ========================= */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('fade-in');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  $$('.card').forEach(el => observer.observe(el));
+
+  /* =========================
+     Accessibility / Reduced Motion
+     ========================= */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    fabs.forEach(f => f.style.transition = 'none');
+  }
+
+  /* =========================
+     Hero Video Auto-Pause
+     ========================= */
+  const heroVideo = $('.hero-video');
+  if (heroVideo && 'IntersectionObserver' in window) {
+    const vidObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (heroVideo.paused && !heroVideo.getAttribute('data-manual')) {
+            heroVideo.play().catch(() => {});
+          }
+        } else {
+          if (!heroVideo.paused) heroVideo.pause();
+        }
+      });
+    }, { threshold: 0.2 });
+    vidObserver.observe(heroVideo);
+  }
+
+  /* =========================
+     Basic Form Validation
+     ========================= */
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', () => {
+      form.querySelectorAll('[required]').forEach(input => {
+        if (!input.value) {
+          input.classList.add('invalid');
+          input.addEventListener('input', () => input.classList.remove('invalid'), { once: true });
+        }
+      });
+    });
+  });
+
+})();
